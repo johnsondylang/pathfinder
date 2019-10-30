@@ -1,1 +1,2 @@
-# Algorithm-Animation
+# pathfinder
+Visualization tool for pathfinding algorithms
