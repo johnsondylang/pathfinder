@@ -10,7 +10,8 @@ class SidePanel extends LitElement {
             cellsChecked: {type: Number},
             solutionLength: {type: Number},
             algorithmInfo: {type: String},
-            diagonalSearch: {type: Boolean}
+            diagonalSearch: {type: Boolean},
+            disabled: {type: Boolean}
         }
     }
 
@@ -19,6 +20,7 @@ class SidePanel extends LitElement {
         this.algorithms = [];
         this.collapsed = false;
         this.diagonalSearch = false;
+        this.disabled = false;
     }
 
     static get styles() {
@@ -88,7 +90,11 @@ class SidePanel extends LitElement {
                 select:hover {
                     cursor: pointer;
                     border-color: rgb(40, 167, 232)
-                }              
+                }     
+                select:disabled {
+                    cursor: unset;
+                    opacity: .2;
+                }         
                 label {
                     font-weight: 400;
                     color: #6c757d;
@@ -137,7 +143,7 @@ class SidePanel extends LitElement {
 
                 <div ?collapsed=${this.collapsed} class="control-btn">
                     <label>Algorithm: </label>
-                    <select id="algorithm-select">                
+                    <select id="algorithm-select" ?disabled=${this.disabled}>                
                         ${this.algorithms.map(item => {
                             return html`<option value=${item}>${item}</option>`
                         })}                                                                      
@@ -145,13 +151,13 @@ class SidePanel extends LitElement {
                 </div>
                 <div ?collapsed=${this.collapsed} class="control-btn">
                     <div>
-                        <input id="diagonal-search-checkbox" type="checkbox" name="diagonal-search" .checked=${this.diagonalSearch}>
+                        <input id="diagonal-search-checkbox" type="checkbox" ?disabled=${this.disabled} .checked=${this.diagonalSearch}>
                         <label>Diagonal Search</label>
                     </div>
                 </div>
                 <div ?collapsed=${this.collapsed} class="control-btn">
                     <label>Maze Generator: </label>
-                    <select id="algorithm" list="algorithm-list">                
+                    <select id="algorithm" ?disabled=${this.disabled}>                
                         <option>Coming Soon!</option>                                            
                     </select>
                 </div>

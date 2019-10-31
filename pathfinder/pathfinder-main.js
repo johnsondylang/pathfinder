@@ -174,9 +174,11 @@ class PathfinderMain extends LitElement {
         // will use this event to set the runningAlgorithm property
         this.grid.addEventListener("algorithmStart", event => {
             this.runningAlgorithm = true;
+            this.sidePanel.disabled = true;
         });
         this.grid.addEventListener("algorithmEnd", event => {
             this.runningAlgorithm = false;
+            this.sidePanel.disabled = false;
             this.sidePanel.solutionLength = event.detail.solutionLength;
             this.sidePanel.cellsChecked = event.detail.cellsChecked;
             this.sidePanel.algorithmInfo = event.detail.algorithm;
