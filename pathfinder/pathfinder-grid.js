@@ -440,13 +440,21 @@ export class PathfinderGrid extends LitElement {
      * Sets the inital start and end cell positions
      */
     _setInitialStartEnd() {
+
+        // set the inital coords to a nice looking spot in the middle-ish of the grid
         const startEndRow = Math.floor(this.rows / 2);
         const startColumn = Math.floor(this.columns / 4);
         const endColumn = Math.floor(this.columns - (this.columns / 4));
         
+        // remove previous start and end if there
+        if (this.startCell) this.startCell.start = false;
+        if (this.endCell) this.endCell.end = false;
+
+        // set the start and end cells based on the calculated column/row values above
         this.startCell = this.shadowRoot.querySelector(`[column="${startColumn}"][row="${startEndRow}"]`);
         this.endCell = this.shadowRoot.querySelector(`[column="${endColumn}"][row="${startEndRow}"]`);
 
+        // set the start and end cells as start and end
         if (this.startCell) this.startCell.start = true;
         if (this.endCell) this.endCell.end = true;
     }
