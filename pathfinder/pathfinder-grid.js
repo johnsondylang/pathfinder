@@ -239,7 +239,6 @@ export class PathfinderGrid extends LitElement {
             // up
             [cell.column, cell.row - 1],
         ]
-        debugger;
         // add diagonal vectors if perameter set
         if (this.allowDiagonalSearch) {            
             directionVectors = directionVectors.concat([

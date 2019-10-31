@@ -213,10 +213,6 @@ class SidePanel extends LitElement {
 
     }
 
-    attributeChangedCallback(c) {
-        debugger;
-    }
-
     disconnectedCallback() {
         super.disconnectedCallback();
         window.removeEventListener('resize', this._applyMediaQuery);
