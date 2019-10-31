@@ -25,7 +25,8 @@ export class PathfinderGrid extends LitElement {
         return {            
             columns: {type: Number},
             rows: {type: Number},     
-            speedLevel: {type: String},      
+            speedLevel: {type: String}, 
+            allowDiagonalSearch: {type: Boolean, reflect: true}     
         }
     }
 
@@ -39,6 +40,8 @@ export class PathfinderGrid extends LitElement {
         this.startCell;
         this.endCell;
         
+        this.allowDiagonalSearch = false;
+
         // 
         this.eventHandler = {
             "setBlocked": false,
@@ -226,7 +229,7 @@ export class PathfinderGrid extends LitElement {
     getAdjacentCells(cell, {ignoreBlocked, ignoreChecked}={}) {
         
         // set x,y (column, row) based on the passed in cell
-        const directionVectors = [
+        let directionVectors = [
             // right
             [cell.column + 1, cell.row],
             // down
@@ -234,8 +237,22 @@ export class PathfinderGrid extends LitElement {
             // left
             [cell.column - 1, cell.row],
             // up
-            [cell.column, cell.row - 1]
+            [cell.column, cell.row - 1],
         ]
+        debugger;
+        // add diagonal vectors if perameter set
+        if (this.allowDiagonalSearch) {            
+            directionVectors = directionVectors.concat([
+                // diagonal left / down
+                [cell.column - 1, cell.row + 1],
+                // diagonal left / up
+                [cell.column - 1, cell.row - 1],
+                // diagonal right / down
+                [cell.column + 1, cell.row + 1],
+                // diagonal right / up
+                [cell.column + 1, cell.row - 1]
+            ]);
+        }
 
         let adjacentCells = [];
         for (const vector of directionVectors) {
@@ -368,15 +385,21 @@ export class PathfinderGrid extends LitElement {
         const cell = event.detail.element;
         // decide what action to take, if any, depening on value set in eventHandler
         if (this.eventHandler.setBlocked) {
+            // can not block cells that are the start or end cells
+            if (cell.start || cell.end) return;
             // adds the blocked prop of the cell allows user to create 'wall' by holding and dragging mouse
             cell.blocked = true;
         } else if (this.eventHandler.removeBlocked) {
             // remove the blocked of the cell, allows user to remove walls by holding and dragging mouse
             cell.blocked = false;
         } else if (this.eventHandler.moveStart) {
+            // can not set blocked or end cells as start
+            if (cell.blocked || cell.end) return;
             // changes the start cell. Allows user to hold and drag the start cell to a new position
             this._moveStart(cell);
         } else if (this.eventHandler.moveEnd) {
+            // can not set blocked or start cells as end
+            if (cell.blocked || cell.start) return;
             // changes the end cell. Allows user to hold and drag the end cell to a new position
             this._moveEnd(cell);
         }

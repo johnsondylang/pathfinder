@@ -162,7 +162,7 @@ class PathfinderMain extends LitElement {
         // use the grids supported algorithm list directly as the options for the side panels algorithm select
         // the value of this select will be used as input to call the findPath function
         this.sidePanel.algorithms = Object.keys(this.grid.SUPPORTED_ALGORITHMS);
-    
+
         // get the buttons and selects
         const playPauseButton = shadow.querySelector("#play-pause-btn");
         const sizeSelect = shadow.querySelector("#size-select");
@@ -182,6 +182,12 @@ class PathfinderMain extends LitElement {
             this.sidePanel.algorithmInfo = event.detail.algorithm;
         });
 
+        this.sidePanel.addEventListener("diagonalSearchChanged", event => {
+            debugger
+            const value = event.detail.newValue;
+            this.grid.allowDiagonalSearch = value;
+        }); 
+
         // add buttons callbacks
         playPauseButton.addEventListener('click', event => {
             if (this.runningAlgorithm) {
@@ -189,8 +195,7 @@ class PathfinderMain extends LitElement {
             } else {
                 const algorithmName = this.sidePanel.selectedAlgorithm();
                 this.grid.findPath(algorithmName);
-            }
-            
+            }            
         });
 
         sizeSelect.addEventListener('change', event => {
@@ -209,7 +214,8 @@ class PathfinderMain extends LitElement {
         speedSelect.addEventListener('click', event => {
             const value = event.target.value;
             this.grid.speedLevel = value;
-        })
+        });
+
     }
 }
 

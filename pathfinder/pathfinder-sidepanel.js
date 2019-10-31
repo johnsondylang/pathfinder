@@ -10,6 +10,7 @@ class SidePanel extends LitElement {
             cellsChecked: {type: Number},
             solutionLength: {type: Number},
             algorithmInfo: {type: String},
+            diagonalSearch: {type: Boolean}
         }
     }
 
@@ -17,6 +18,7 @@ class SidePanel extends LitElement {
         super();
         this.algorithms = [];
         this.collapsed = false;
+        this.diagonalSearch = false;
     }
 
     static get styles() {
@@ -142,6 +144,12 @@ class SidePanel extends LitElement {
                     </select>
                 </div>
                 <div ?collapsed=${this.collapsed} class="control-btn">
+                    <div>
+                        <input id="diagonal-search-checkbox" type="checkbox" name="diagonal-search" .checked=${this.diagonalSearch}>
+                        <label>Diagonal Search</label>
+                    </div>
+                </div>
+                <div ?collapsed=${this.collapsed} class="control-btn">
                     <label>Maze Generator: </label>
                     <select id="algorithm" list="algorithm-list">                
                         <option>Coming Soon!</option>                                            
@@ -172,6 +180,8 @@ class SidePanel extends LitElement {
 
         const openButton = this.shadowRoot.querySelector("#open-btn");
         const closeButton = this.shadowRoot.querySelector("#close-btn");
+        const diagonalSearchCheckbox = this.shadowRoot.querySelector("#diagonal-search-checkbox");
+
 
         openButton.addEventListener("click", event => {
             this.collapsed = false;
@@ -179,8 +189,26 @@ class SidePanel extends LitElement {
 
         closeButton.addEventListener("click", event => {
             this.collapsed = true;
-        })
+        });
 
+        diagonalSearchCheckbox.addEventListener("click", event => {
+
+            const e = new CustomEvent("diagonalSearchChanged", {            
+                detail: {
+                    newValue: !this.diagonalSearch,
+                    oldValue: this.diagonalSearch
+                },
+                bubbles: true, 
+                composed: true 
+            });
+            this.diagonalSearch = !this.diagonalSearch;
+            this.dispatchEvent(e);
+        });
+
+    }
+
+    attributeChangedCallback(c) {
+        debugger;
     }
 
     disconnectedCallback() {
