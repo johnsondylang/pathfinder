@@ -1,4 +1,5 @@
-import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+//import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 
 
 class SidePanel extends LitElement {
@@ -129,15 +130,14 @@ class SidePanel extends LitElement {
 
     render() {
         return html`
-            <link href="node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet">
             <div ?collapsed=${this.collapsed} class="side-panel">                
                 
                 <div id="open-close-btn-container">
                     <a ?collapsed=${this.collapsed} id="open-btn">
-                        <i class="fas fa-bars"></i>
+                        <iron-icon icon="chevron-right"></iron-icon>
                     </a>
                     <a ?collapsed=${this.collapsed} id="close-btn">
-                        <i class="far fa-times-circle"></i>
+                        <iron-icon icon="chevron-left"></iron-icon>
                     </a>
                 </div>
 

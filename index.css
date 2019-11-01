@@ -28,6 +28,11 @@ i {
     padding:10px; 
     float:right;
 }
+iron-icon {
+    color:white; 
+    padding:10px; 
+    float:right;
+}
 #link-bar a:first-of-type {
     margin-left: auto;
 }

@@ -2,21 +2,59 @@
 <html lang="en">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151189402-1"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151189402-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'UA-151189402-1');
-    </script>
+    </script> -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="./node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet">
+    <title>Pathfinder</title>
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- <link href="./node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"> -->
     <link href="./index.css" rel="stylesheet">
+
+    <script>
+        /**
+        * [polymer-root-path]
+        *
+        * Leave this line unchanged if you intend to serve your app from the root
+        * path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
+        *
+        * If you intend to serve your app from a non-root path (e.g., with URLs
+        * like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
+        * to indicate the path from which you'll be serving, including leading
+        * and trailing slashes (e.g., `/my-app/`).
+        */
+        window.MyAppGlobals = { rootPath: '/' };
+  
+        // Load and register pre-caching Service Worker
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('service-worker.js', {
+              scope: MyAppGlobals.rootPath
+            });
+          });
+        }
+    </script>
+
+    <script type="module">
+        import '@polymer/iron-icon/iron-icon.js';
+        import '@polymer/iron-icons/iron-icons.js';
+    </script>
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <!-- Load pathfinder shell -->
+    <script type="module" src="./src/pathfinder-main.js"></script>
+
 </head>
 <body>
     <div id="outer-container">
@@ -25,32 +63,25 @@
                 <div id="#link-bar-logo-image"></div>
                 <div id="link-bar-logo-text">Visualizer</div>
             </div>
-            <!-- Linkedin -->
-            <a>
-                <i class="fab fa-linkedin fa-lg"></i>
-            </a>
-            
+          
             <!-- My email address -->
             <a href="mailto:dylan.johnson.g@gmail.com">
-                <i class="fas fa-envelope fa-lg"></i>
+                <iron-icon icon="mail"></iron-icon>
             </a>     
             
             <!-- GitHub -->
-            <a href="https://github.com/johnsondylang">
-                <i class="fab fa-github fa-lg"></i>
-            </a>
+            <!-- <a href="https://github.com/johnsondylang">
+                github
+            </a> -->
             
             <!-- My Profile website -->   
-            <a>
-                <i class="fas fa-home fa-lg"></i>
+            <a href="https://github.com/johnsondylang">
+                <iron-icon icon="home"></iron-icon>
             </a>            
         </div>        
         <div id="inner-container">
             <pathfinder-main></pathfinder-main>
         </div>
-    </div>
-
-    <script type="module" src="./pathfinder/pathfinder-main.js"></script>
- 
+    </div> 
 </body>
 </html>

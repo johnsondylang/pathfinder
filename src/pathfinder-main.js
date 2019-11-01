@@ -1,4 +1,9 @@
-import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+//import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@vaadin/vaadin-icons/vaadin-icons.js';
+
 import './pathfinder-grid.js';
 import './pathfinder-sidepanel.js';
 
@@ -120,12 +125,11 @@ class PathfinderMain extends LitElement {
 
     render() {
         return html`
-            <link href="node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet">
             <div class="main-container">
                 <side-panel></side-panel>
                 <div class="main-panel">
                     <div class="control-bar">
-                        <i id="play-pause-btn" class="far fa-${this.runningAlgorithm ? 'pause' : 'play'}-circle fa-2x"></i>
+                        <iron-icon id="play-pause-btn" icon="vaadin:${this.runningAlgorithm ? "ellipsis-circle-o" : "play-circle-o"}"></iron-icon>
                         <select style="margin-left:10px;" id="speed-select">                
                             <option value="Very Slow">Very Slow</option>
                             <option value="Slow">Slow</option>
