@@ -6,7 +6,8 @@
   "scripts": {
     "start": "polymer serve",
     "start:static": "polymer serve build/es5-bundled",
-    "build": "polymer build"
+    "build": "polymer build",
+    "deploy": "polymer build && cd build/es5-bundled && git init && git add . && git commit -m 'build' && git remote add origin https://github.com/johnsondylang/pathfinder.git && git push --force origin master:gh-pages"
   },
   "dependencies": {
     "@polymer/iron-icons": "^3.0.1",
