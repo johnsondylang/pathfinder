@@ -11,20 +11,13 @@
   "builds": [
     {
       "name": "es5-bundled",
-      "js": {
-        "minify": true,
-        "compile": true,
-        "transformModulesToAmd": true
-      },
-      "css": {
-        "minify": true
-      },
-      "html": {
-        "minify": true
-      },
+      "js": {"minify": true, "compile": true},
+      "css": {"minify": true},
+      "html": {"minify": true},
       "bundle": true,
-      "addServiceWorker": true
-    }
+      "addServiceWorker": true,
+      "addPushManifest": false
+      }
   ],
   "moduleResolution": "node",
   "npm": true,
