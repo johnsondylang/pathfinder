@@ -43,12 +43,15 @@ class PathfinderMain extends LitElement {
                     margin-right:5px;
                     margin-left: 10px;
                 }
-                i {
+                iron-icon {
                     color: #2C3E50;
                 }
-                i:hover {
+                iron-icon:hover {
                     color: black;
                     cursor: pointer;
+                }
+                iron-icon[runningAlgorithm] {
+                    cursor:not-allowed;
                 }
                 .btn-group {
                     display: flex;
@@ -129,7 +132,7 @@ class PathfinderMain extends LitElement {
                 <side-panel></side-panel>
                 <div class="main-panel">
                     <div class="control-bar">
-                        <iron-icon id="play-pause-btn" icon="vaadin:${this.runningAlgorithm ? "ellipsis-circle-o" : "play-circle-o"}"></iron-icon>
+                        <iron-icon id="play-pause-btn" ?runningAlgorithm=${this.runningAlgorithm} icon="vaadin:${this.runningAlgorithm ? "ellipsis-circle-o" : "play-circle-o"}"></iron-icon>
                         <select style="margin-left:10px;" id="speed-select">                
                             <option value="Very Slow">Very Slow</option>
                             <option value="Slow">Slow</option>
