@@ -188,9 +188,10 @@ class PathfinderMain extends LitElement {
             this.sidePanel.algorithmInfo = event.detail.algorithm;
         });
 
+        // add event listener for when the diagonal search checkbox is changed
         this.sidePanel.addEventListener("diagonalSearchChanged", event => {
-            debugger
             const value = event.detail.newValue;
+            // set the grids allowDiagonalSearch property based on the sidepanels checkbox state
             this.grid.allowDiagonalSearch = value;
         }); 
 
