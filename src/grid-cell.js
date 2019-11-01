@@ -1,4 +1,5 @@
-import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+//import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+import {LitElement, html, css} from 'lit-element';
 
 
 class GridCell extends LitElement {

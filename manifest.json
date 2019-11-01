@@ -1,0 +1,7 @@
+{
+  "name": "pathfinder",
+  "short_name": "pathfinder",
+  "description": "Visualization tool for various pathfinding algorithms",
+  "start_url": "/",
+  "display": "standalone"
+}

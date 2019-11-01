@@ -1,18 +1,26 @@
 {
   "name": "pathfinder",
-  "version": "1.0.0",
-  "description": "visualize pathfinding algorithms",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Visualization tool for various pathfinding algorithms",
   "author": "Dylan Johnson",
   "license": "MIT",
+  "scripts": {
+    "start": "polymer serve",
+    "start:static": "polymer serve build/es5-bundled",
+    "build": "polymer build"
+  },
   "dependencies": {
-    "font-awesome": "^4.7.0",
-    "material-icons": "^0.3.1"
+    "@polymer/iron-icons": "^3.0.1",
+    "@polymer/polymer": "^3.0.0",
+    "@vaadin/vaadin-icons": "^4.3.1",
+    "i": "^0.3.6",
+    "lit-element": "^2.2.1",
+    "npm": "^6.12.1"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2"
+    "@polymer/test-fixture": "^4.0.2",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "wct-mocha": "^1.0.1"
   }
 }

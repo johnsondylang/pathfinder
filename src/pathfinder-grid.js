@@ -1,4 +1,6 @@
-import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+//import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
+import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
+
 import './grid-cell.js'
 
 // Imports the pathfinding algorithm functions
@@ -11,16 +13,6 @@ import {dijkstras} from './algorithms/dijkstras.js';
 
 export class PathfinderGrid extends LitElement {
 
-    /**
-     * All the available pathfinding algorithms currently implemented
-     */
-    SUPPORTED_ALGORITHMS = {
-        "A*": aStar,
-        "Breadth First": breadthFirst,
-        "Depth First": depthFirst,
-        "Dijkstras": dijkstras,        
-    }
-
     static get properties() {
         return {            
             columns: {type: Number},
@@ -32,6 +24,16 @@ export class PathfinderGrid extends LitElement {
 
     constructor() {
         super();
+
+        /**
+         * All the available pathfinding algorithms currently implemented
+        */
+        this.SUPPORTED_ALGORITHMS = {
+            "A*": aStar,
+            "Breadth First": breadthFirst,
+            "Depth First": depthFirst,
+            "Dijkstras": dijkstras,        
+        }
 
         this.speedLevel = "Normal";
         this.columns = 0;
