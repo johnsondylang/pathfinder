@@ -149,7 +149,8 @@ class SidePanel extends LitElement {
                         })}                                                                      
                     </select>
                 </div>
-                <div ?collapsed=${this.collapsed} class="control-btn">
+                <!-- Display:none here until fix the bug with the algorithms not getting optimal path during diagonal search -->
+                <div style="display:none" ?collapsed=${this.collapsed} class="control-btn">
                     <div>
                         <input id="diagonal-search-checkbox" type="checkbox" ?disabled=${this.disabled} .checked=${this.diagonalSearch}>
                         <label>Diagonal Search</label>

@@ -145,6 +145,7 @@ class PathfinderMain extends LitElement {
                             <button ?disabled=${this.runningAlgorithm} id="clear-walls-btn">Clear Walls</button>
                             <button ?disabled=${this.runningAlgorithm} id="reset-btn">Reset</button>
                         </div>
+                        <!-- There is a bug with resizing after production build. Keep display:none here until that is fixed -->
                         <select style="display:none" ?disabled=${this.runningAlgorithm} id="size-select">                
                             <option value="20x30">Small</option>
                             <option value="30x40">Medium</option>

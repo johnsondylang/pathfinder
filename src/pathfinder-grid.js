@@ -4,11 +4,11 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import './grid-cell.js'
 
 // Imports the pathfinding algorithm functions
-//import {bestFirst} from './algorithms/bestFirstSearch.js';
-import {aStar} from './algorithms/aStar.js'
+import {aStar} from './algorithms/aStar.js';
 import {breadthFirst} from './algorithms/breadthFirst.js';
 import {depthFirst} from './algorithms/depthFirst.js';
 import {dijkstras} from './algorithms/dijkstras.js';
+import {greedyBestFirst} from './algorithms/greedyBestFirst.js';
 
 
 export class PathfinderGrid extends LitElement {
@@ -32,7 +32,8 @@ export class PathfinderGrid extends LitElement {
             "A*": aStar,
             "Breadth First": breadthFirst,
             "Depth First": depthFirst,
-            "Dijkstras": dijkstras,        
+            "Dijkstras": dijkstras,    
+            "Greedy Best-First": greedyBestFirst,    
         }
 
         this.speedLevel = "Normal";
@@ -145,7 +146,13 @@ export class PathfinderGrid extends LitElement {
             this._dispatchAlgorithmStart();
 
             // run the function
-            const path = await pathfinderFunction(this);
+            let path = await pathfinderFunction(this);
+
+            // handle case pathfinder function returns undefined, 
+            // could happend if no possible path
+            if (!path) {
+                path = [];
+            }
 
             //highlight the found path
             await this._highlightPath(path);
@@ -323,7 +330,9 @@ export class PathfinderGrid extends LitElement {
      * @param {Array<cell-list>} cellList
      */
     async _highlightPath(cellList) {
-        
+        // return if cellList is undefined or empty array
+        if (!cellList) return;
+        // highlight cells in the path by setting the 'inShortestPath property to true
         for (const cell of cellList) {            
             await this.wait(0);
             cell.inShortestPath = true;
