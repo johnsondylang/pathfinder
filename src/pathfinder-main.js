@@ -202,7 +202,7 @@ class PathfinderMain extends LitElement {
         // add buttons callbacks
         playPauseButton.addEventListener('click', event => {
             if (this.runningAlgorithm) {
-                this.grid.pauseAlgorithm();
+                // TODO: Implement pause functionality
             } else {
                 const algorithmName = this.sidePanel.selectedAlgorithm();
                 this.grid.findPath(algorithmName);
