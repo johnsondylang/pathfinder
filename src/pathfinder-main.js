@@ -145,12 +145,12 @@ class PathfinderMain extends LitElement {
                             <button ?disabled=${this.runningAlgorithm} id="clear-walls-btn">Clear Walls</button>
                             <button ?disabled=${this.runningAlgorithm} id="reset-btn">Reset</button>
                         </div>
-                        <select ?disabled=${this.runningAlgorithm} id="size-select">                
+                        <!-- <select ?disabled=${this.runningAlgorithm} id="size-select">                
                             <option value="20x30">Small</option>
                             <option value="30x40">Medium</option>
                             <option value="35x40">Large</option>
                             <option value="50x60">Very Large</option>                       
-                        </select>
+                        </select> -->
                     </div>
                     <div class="grid-container">
                         <pathfinder-grid rows=20 columns=30></pathfinder-grid>
