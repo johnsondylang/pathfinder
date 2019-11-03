@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "polymer serve",
-    "start:static": "polymer serve build/es5-bundled",
+    "start:static": "polymer serve build/production",
     "build": "polymer build",
-    "deploy": "polymer build && cd build/es5-bundled && git init && git add . && git commit -m 'build' && git remote add origin https://github.com/johnsondylang/pathfinder.git && git push --force origin master:gh-pages"
+    "deploy": "polymer build && cd build/production && git init && git add . && git commit -m 'build' && git remote add origin https://github.com/johnsondylang/pathfinder.git && git push --force origin master:netlify"
   },
   "dependencies": {
     "@polymer/iron-icons": "^3.0.1",

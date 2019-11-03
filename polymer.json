@@ -10,7 +10,7 @@
   ],
   "builds": [
     {
-      "name": "es5-bundled",
+      "name": "production",
       "js": {"minify": false, "compile": "es5"},
       "css": {"minify": false},
       "html": {"minify": false},
@@ -19,7 +19,7 @@
       "addPushManifest": false
     },
     {
-      "name": "es5-unbundled",
+      "name": "development",
       "js": {
         "minify": false,
         "compile": "es5",
