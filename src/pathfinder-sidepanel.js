@@ -22,6 +22,7 @@ class SidePanel extends LitElement {
         this.collapsed = false;
         this.diagonalSearch = false;
         this.disabled = false;
+        this.algorithmInfo = '';
     }
 
     static get styles() {
@@ -29,6 +30,7 @@ class SidePanel extends LitElement {
             css`
                 .side-panel {
                     display: flex;
+                    flex-basis:0;
                     flex-direction: column;
                     background: #F8F9FA;
                     width:225px;
@@ -41,8 +43,9 @@ class SidePanel extends LitElement {
                 
                 #open-close-btn-container {
                     display: flex;
+                    flex-basis:0;
                     justify-content:center;
-                    width: -webkit-fill-available;
+                    width: 100%;
                     height: 45px;
                 }
 
@@ -71,6 +74,7 @@ class SidePanel extends LitElement {
 
                 .control-btn {
                     display: flex;
+                    flex-basis:0;
                     flex-direction: column;
                     margin:10px;
                 }
@@ -166,10 +170,13 @@ class SidePanel extends LitElement {
                 <div ?collapsed=${this.collapsed} class="run-stats-container">
                     <label>Run Stats:</label>
                     <div id="run-stats">
-                        <div>Optimal Solution: <div class="stat-values"></div></div>
+                        <!-- TODO: Add More algorithm details, currently only passing algorithm name -->
+                        <div>Algorithm: <div class="stat-values">${this.algorithmInfo ? this.algorithmInfo : ''}</div></div>
                         <div>Solution Length: <div class="stat-values">${this.solutionLength ? this.solutionLength : ''}</div> </div>                        
                         <div>Cells Checked: <div class="stat-values">${this.cellsChecked ? this.cellsChecked : ''}</div></div>
-                        <div>Algorithm Info: <div class="stat-values">${this.algorithmInfo ? this.algorithmInfo : ''}</div></div>
+                        <!-- TODO: ADD Detailed algorithm info here for users -->
+                        <!-- TODO: Somewhat hardcoded solution here is just until I can take the time to write out algorithm descriptions and pass them down -->
+                        <div>Optimal Solution: <div class="stat-values">${this.algorithmInfo ? this.algorithmInfo == "Depth First" ? "Not Guaranteed" : "Guaranteed" : ''}</div></div>
                     </div>
                 </div>
 

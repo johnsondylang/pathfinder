@@ -61,18 +61,19 @@ export class PathfinderGrid extends LitElement {
             css`          
                 :host {
                     display: flex;
+                    flex-basis: 0;
                     justify-content: center;
                     align-items: center;        
                     height:100%;  
                     width:100%;  
-                    border: 2px solid rgb(40, 167, 232, .3);               
+                    border: 2px solid rgba(40, 167, 232, .3);               
                 }     
                 .board {
                     display: grid;
                     height: 100%;
                     width: 100%;
                     grid-gap: 1px;                    
-                    background-color: rgb(40, 167, 232, .3);                    
+                    background-color: rgba(40, 167, 232, .3);                    
                 }               
             `
         ]

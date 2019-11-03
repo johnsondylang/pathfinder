@@ -25,18 +25,21 @@ class PathfinderMain extends LitElement {
             css`         
                 .main-container {
                     display: flex;
+                    flex-basis:0;
                     flex-direction: row;
                     height:100%;
                 }
                 .main-panel {
                     background:white;
                     display: flex;
+                    flex-basis:0;
                     flex-direction: column;
                     flex-grow: 1;
                     width: 100%;
                 }
                 .control-bar {
                     display:flex;
+                    flex-basis:1;
                     flex-direction: row;
                     height:40px;                     
                     align-items: center; 
@@ -55,6 +58,7 @@ class PathfinderMain extends LitElement {
                 }
                 .btn-group {
                     display: flex;
+                    flex-basis:0;
                     margin-left: auto;
                 }
                 .grid-container {
@@ -142,7 +146,7 @@ class PathfinderMain extends LitElement {
                             <option value="ludicrous Speed Go!">ludicrous Speed Go!</option>
                         </select>
                         <div class="btn-group">
-                            <button ?disabled=${this.runningAlgorithm} id="clear-walls-btn">Clear Walls</button>
+                            <button ?disabled=${this.runningAlgorithm} id="clear-walls-btn">Clear</button>
                             <button ?disabled=${this.runningAlgorithm} id="reset-btn">Reset</button>
                         </div>
                         <!-- There is a bug with resizing after production build. Keep display:none here until that is fixed -->
@@ -216,10 +220,14 @@ class PathfinderMain extends LitElement {
 
         clearWallsBtn.addEventListener('click', event => {
             this.grid.clearBlocks();
+            this.grid.clearPath();
         });
         
         resetButton.addEventListener('click', event => {
             this.grid.resetGrid();
+            this.sidePanel.solutionLength = '';
+            this.sidePanel.cellsChecked = '';
+            this.sidePanel.algorithmInfo = '';
         });
 
         speedSelect.addEventListener('click', event => {
