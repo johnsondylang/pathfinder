@@ -86,5 +86,32 @@
             <pathfinder-main></pathfinder-main>
         </div>
     </div> 
+
+
+    <!-- temporary message to display in IE or Edge until I can get the build working -->
+    <div id="not-supported" style="display: none; position: absolute;top: 30%; left:250px">
+        <p style="font-size:40px">
+            This Browser is not supported.
+            You can use almost any other browsers except IE or Edge...
+        </p>
+    </div>
+
+    <script>
+        // TODO: CREATE A BUILD THAT WORKS IN IE
+        // until finished, display not supported message
+
+        document.addEventListener("DOMContentLoaded", event => {
+            // Internet Explorer 6-11
+            const isIE = /*@cc_on!@*/false || !!document.documentMode;
+            // Edge 20+
+            const isEdge = !isIE && !!window.StyleMedia;
+
+            if (isIE || isEdge) {
+                document.querySelector("#outer-container").style.display = "none";
+                document.querySelector("#not-supported").style.display = "block";
+            }
+        });
+
+    </script>
 </body>
 </html>
