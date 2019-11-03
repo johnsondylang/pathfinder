@@ -17,9 +17,26 @@
       "bundle": true,
       "addServiceWorker": true,
       "addPushManifest": false
-      }
+    },
+    {
+      "name": "es5-unbundled",
+      "js": {
+        "minify": false,
+        "compile": "es5",
+        "transformModulesToAmd": false
+      },
+      "css": {
+        "minify": false 
+      },
+      "html": {
+        "minify": false 
+      },
+      "bundle": false,
+      "addServiceWorker": false,
+      "addPushManifest": false,
+      "preset": "es5-bundled"
+    }
   ],
-  "moduleResolution": "node",
   "npm": true,
   "lint": {
     "rules": [
