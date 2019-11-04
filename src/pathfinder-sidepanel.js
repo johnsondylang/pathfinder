@@ -176,7 +176,7 @@ class SidePanel extends LitElement {
                         <div>Cells Checked: <div class="stat-values">${this.cellsChecked ? this.cellsChecked : ''}</div></div>
                         <!-- TODO: ADD Detailed algorithm info here for users -->
                         <!-- TODO: Somewhat hardcoded solution here is just until I can take the time to write out algorithm descriptions and pass them down -->
-                        <div>Optimal Solution: <div class="stat-values">${this.algorithmInfo ? this.algorithmInfo == "Depth First" ? "Not Guaranteed" : "Guaranteed" : ''}</div></div>
+                        <div>Optimal Solution: <div class="stat-values">${this.algorithmInfo ? this.algorithmInfo == "Depth First" || this.algorithmInfo == "Greedy Best-First" ? "Not Guaranteed" : "Guaranteed" : ''}</div></div>
                     </div>
                 </div>
 
