@@ -23,6 +23,16 @@ body {
     color:white; 
     display: inline-block;
 }
+#github-container {
+    margin-left: auto;
+    margin-right: 10px;
+}
+#github-container div {
+    color: white;
+}
+#github-container a {
+    color: #66A7E8;
+}
 i {
     color:white; 
     padding:10px; 
