@@ -4,11 +4,11 @@ import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 import './grid-cell.js'
 
 // Imports the pathfinding algorithm functions
-import {aStar} from './algorithms/aStar.js';
-import {breadthFirst} from './algorithms/breadthFirst.js';
-import {depthFirst} from './algorithms/depthFirst.js';
-import {dijkstras} from './algorithms/dijkstras.js';
-import {greedyBestFirst} from './algorithms/greedyBestFirst.js';
+import {aStar} from './pathAlgorithms/aStar.js.js';
+import {breadthFirst} from './pathAlgorithms/breadthFirst.js.js';
+import {depthFirst} from './pathAlgorithms/depthFirst.js.js';
+import {dijkstras} from './pathAlgorithms/dijkstras.js.js';
+import {greedyBestFirst} from './pathAlgorithms/greedyBestFirst.js.js';
 
 
 export class PathfinderGrid extends LitElement {
