@@ -173,7 +173,8 @@ class PathfinderMain extends LitElement {
         this.sidePanel = this.shadowRoot.querySelector("side-panel");
         // use the grids supported algorithm list directly as the options for the side panels algorithm select
         // the value of this select will be used as input to call the findPath function
-        this.sidePanel.algorithms = Object.keys(this.grid.SUPPORTED_ALGORITHMS);
+        this.sidePanel.pathAlgorithms = Object.keys(this.grid.SUPPORTED_PATH_ALGORITHMS);
+        this.sidePanel.mazeAlgorithms = Object.keys(this.grid.SUPPORTED_MAZE_ALGORITHMS);
 
         // get the buttons and selects
         const playPauseButton = shadow.querySelector("#play-pause-btn");
@@ -203,12 +204,18 @@ class PathfinderMain extends LitElement {
             this.grid.allowDiagonalSearch = value;
         }); 
 
+        // add event listener for when the maze generator is selected
+        this.sidePanel.addEventListener("mazeAlgorithmChange", event => {
+            const value = event.detail.value;
+            this.grid.generateMaze(value);
+        });
+
         // add buttons callbacks
         playPauseButton.addEventListener('click', event => {
             if (this.runningAlgorithm) {
                 // TODO: Implement pause functionality
             } else {
-                const algorithmName = this.sidePanel.selectedAlgorithm();
+                const algorithmName = this.sidePanel.selectedPathAlgorithm();
                 this.grid.findPath(algorithmName);
             }            
         });

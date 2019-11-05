@@ -18,7 +18,7 @@ class SidePanel extends LitElement {
 
     constructor() {
         super();
-        this.algorithms = [];
+        this.pathAlgorithms = [];
         this.collapsed = false;
         this.diagonalSearch = false;
         this.disabled = false;
@@ -147,8 +147,8 @@ class SidePanel extends LitElement {
 
                 <div ?collapsed=${this.collapsed} class="control-btn">
                     <label>Algorithm: </label>
-                    <select id="algorithm-select" ?disabled=${this.disabled}>                
-                        ${this.algorithms.map(item => {
+                    <select id="path-algorithm-select" ?disabled=${this.disabled}>                
+                        ${this.pathAlgorithms.map(item => {
                             return html`<option value=${item}>${item}</option>`
                         })}                                                                      
                     </select>
@@ -162,8 +162,11 @@ class SidePanel extends LitElement {
                 </div>
                 <div ?collapsed=${this.collapsed} class="control-btn">
                     <label>Maze Generator: </label>
-                    <select id="algorithm" ?disabled=${this.disabled}>                
-                        <option>Coming Soon!</option>                                            
+                    <select id="maze-algorithm-select" ?disabled=${this.disabled}>                
+                        <option value='' disabled selected>Select Maze Generator</option>
+                        ${this.mazeAlgorithms.map(item => {
+                            return html`<option value=${item}>${item}</option>`
+                        })}                                               
                     </select>
                 </div>
                 
@@ -195,7 +198,7 @@ class SidePanel extends LitElement {
         const openButton = this.shadowRoot.querySelector("#open-btn");
         const closeButton = this.shadowRoot.querySelector("#close-btn");
         const diagonalSearchCheckbox = this.shadowRoot.querySelector("#diagonal-search-checkbox");
-
+        const mazeSelect = this.shadowRoot.querySelector("#maze-algorithm-select");
 
         openButton.addEventListener("click", event => {
             this.collapsed = false;
@@ -219,6 +222,18 @@ class SidePanel extends LitElement {
             this.dispatchEvent(e);
         });
 
+        mazeSelect.addEventListener("change", event => {
+            this.dispatchEvent(new CustomEvent("mazeAlgorithmChange", {
+                detail: {
+                    'value': event.target.value,
+                },
+                bubbles: true,
+                composed: true
+            }));
+
+            event.target.selectedIndex = 0;
+        });
+
     }
 
     disconnectedCallback() {
@@ -226,8 +241,8 @@ class SidePanel extends LitElement {
         window.removeEventListener('resize', this._applyMediaQuery);
     }
 
-    selectedAlgorithm() {
-        const algorithmSelect = this.shadowRoot.querySelector("#algorithm-select");
+    selectedPathAlgorithm() {
+        const algorithmSelect = this.shadowRoot.querySelector("#path-algorithm-select");
         return algorithmSelect.value;
     }
 

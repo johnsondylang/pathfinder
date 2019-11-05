@@ -1,4 +1,4 @@
-import {PriorityQueue} from './PriorityQueue.js.js';
+import {PriorityQueue} from './PriorityQueue.js';
 
 /**
  * applies the A* algorithm

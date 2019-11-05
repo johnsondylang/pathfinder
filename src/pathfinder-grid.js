@@ -1,15 +1,15 @@
-//import {LitElement, html, css} from 'https://unpkg.com/@polymer/lit-element/lit-element.js?module';
 import {LitElement, html, css} from '/node_modules/lit-element/lit-element.js';
 
 import './grid-cell.js'
 
 // Imports the pathfinding algorithm functions
-import {aStar} from './pathAlgorithms/aStar.js.js';
-import {breadthFirst} from './pathAlgorithms/breadthFirst.js.js';
-import {depthFirst} from './pathAlgorithms/depthFirst.js.js';
-import {dijkstras} from './pathAlgorithms/dijkstras.js.js';
-import {greedyBestFirst} from './pathAlgorithms/greedyBestFirst.js.js';
-
+import {aStar} from './pathAlgorithms/aStar.js';
+import {breadthFirst} from './pathAlgorithms/breadthFirst.js';
+import {depthFirst} from './pathAlgorithms/depthFirst.js';
+import {dijkstras} from './pathAlgorithms/dijkstras.js';
+import {greedyBestFirst} from './pathAlgorithms/greedyBestFirst.js';
+// imports the maze generating algorithm functions
+import {recursiveDivision} from './mazeAlgorithms/recursiveDivision.js'
 
 export class PathfinderGrid extends LitElement {
 
@@ -28,12 +28,16 @@ export class PathfinderGrid extends LitElement {
         /**
          * All the available pathfinding algorithms currently implemented
         */
-        this.SUPPORTED_ALGORITHMS = {
+        this.SUPPORTED_PATH_ALGORITHMS = {
             "A*": aStar,
             "Breadth First": breadthFirst,
             "Depth First": depthFirst,
             "Dijkstras": dijkstras,    
             "Greedy Best-First": greedyBestFirst,    
+        }
+
+        this.SUPPORTED_MAZE_ALGORITHMS = {
+            "Recursive Division": recursiveDivision,
         }
 
         this.speedLevel = "Normal";
@@ -132,13 +136,14 @@ export class PathfinderGrid extends LitElement {
         // do not run a new algorithm while another is running
         if (this.eventHandler.runningAlgorithm) return;          
 
+        // increments this everytime a cell is checked to track the number of checks an algorithm performs
         this.eventHandler.cellsChecked = 0;
         
-        if (this.SUPPORTED_ALGORITHMS.hasOwnProperty(algorithmName)) {
+        if (this.SUPPORTED_PATH_ALGORITHMS.hasOwnProperty(algorithmName)) {
             // need to clear all checked cells from previous runs
             this.clearPath();
             // get the specified algorithm from the supported algorithms
-            const pathfinderFunction = this.SUPPORTED_ALGORITHMS[algorithmName];
+            const pathfinderFunction = this.SUPPORTED_PATH_ALGORITHMS[algorithmName];
             
             // set the running Algorithm paramater in the eventHandler object
             // this will block mouse click and mouseover events from altering grid while running algorithm
@@ -162,9 +167,34 @@ export class PathfinderGrid extends LitElement {
             this._dispatchAlgorithmEnd(algorithmName, path.length);
         } else {
             // the way this was intended to be coded, should not ever hit this. Add here just in case
-            throw new Error(`You have tried to run an un-supported algrithm: ${algorithmName}`)
+            throw new Error(`You have tried to run an un-supported algrithm: ${algorithmName}`);
         }
     
+    }
+
+    async generateMaze(algorithmName) {
+        // do not run a new algorithm while another is running
+        if (this.eventHandler.runningAlgorithm) return;          
+
+        if (this.SUPPORTED_MAZE_ALGORITHMS.hasOwnProperty(algorithmName)) {
+            // ensure the runningAlgorithm flag is set in the eventHandler
+            this.eventHandler.runningAlgorithm = true;
+            // clear board to see the maze generating
+            this.clearPath();
+            this.clearBlocks();
+
+            // get and run the algorithm function from the supported maze constant
+            const mazeAlgorithm = this.SUPPORTED_MAZE_ALGORITHMS[algorithmName];
+            await mazeAlgorithm(this);
+
+            // remove the eventHandler flags when maze has been generated
+            this.eventHandler.runningAlgorithm = false;
+
+        } else {
+            // the way this was intended to be coded, should not ever hit this. Add here just in case
+            throw new Error(`You have tried to run an un-supported algrithm: ${algorithmName}`);
+        }
+
     }
 
     /**
@@ -229,6 +259,21 @@ export class PathfinderGrid extends LitElement {
         return this.shadowRoot.querySelector(`[column="${column}"][row="${row}"]`);
     }
     
+
+    /**
+     * returns an array of cells from an array of positions
+     * @param {Array<{}>} cellPositions - an array of the column, row coordinates of the cells to return
+     * @param {Number} cellPositions.column - The column of the cell to return.
+     * @param {Number} cellPositions.row - The row of the cell to return.
+     */
+    getCells(cellPositions) {
+        // build a selector to mat
+        const selectors = cellPositions.map(item=> `[column="${item.column}"][row="${item.row}"]`);
+
+        const cells = this.shadowRoot.querySelectorAll(selectors.join(', '));
+        return Array.from(cells ? cells : []);
+    }
+
     /**
      * Gets all adjacent grid-cells (this is, the cell above, below, right and left) to the passed in grid-cell 
      * @param {grid-cell} cell
@@ -324,6 +369,26 @@ export class PathfinderGrid extends LitElement {
         }
 
         this.eventHandler.cellsChecked += 1;
+    }
+
+    /**
+     * blocks a cell
+     * @param {<grid-cell>} cell 
+     */
+    async blockCell(cell) {
+        
+        if (cell.row == this.startCell.row && cell.column == this.startCell.column) return;
+        if (cell.row == this.endCell.row && cell.column == this.endCell.column) return;
+        
+        cell.blocked = true;
+        for (let i = 0; i < arguments.length; i++) {
+            cell = arguments[i];
+            if (cell.row == this.startCell.row && cell.column == this.startCell.column) return;
+            if (cell.row == this.endCell.row && cell.column == this.endCell.column) return;
+            cell.blocked = true;
+        }
+
+        await this.wait(10);
     }
 
     /**
