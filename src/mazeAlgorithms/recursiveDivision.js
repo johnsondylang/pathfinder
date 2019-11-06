@@ -1,4 +1,3 @@
-import { PathfinderGrid } from "../pathfinder-grid";
 
 /**
  * Applies the recursive division algorithm to generate a maze
@@ -35,7 +34,8 @@ export async function recursiveDivision(grid, subGrid, borderPassages, orientati
     borderPassages = borderPassages ? borderPassages : [];
 
     // exit if subGrid is under the minimum size
-    if (rowSpan < minRowSpan || minColSpan < minColSpan) return;
+    if (rowSpan < minRowSpan || colSpan
+         < minColSpan) return;
 
     // use the provided orientation else, choose random
     const bisectOrientation = orientation ? orientation : chooseOrientation();
@@ -94,8 +94,13 @@ export async function recursiveDivision(grid, subGrid, borderPassages, orientati
     }
 
     // display the wall
-    const cells = grid.getCells(blockCellPositions)
-    await grid.blockCell(...cells);
+    try {
+        const cells = grid.getCells(blockCellPositions)
+        await grid.blockCell(...cells);        
+    } catch (error) {
+        debugger;
+    }
+
 
     // get the subgrids from the bisections and continue the recursion
     const nextSubGrids = createSubGrids(startRow, startColumn, endRow, endColumn, bisectIndex, bisectOrientation);

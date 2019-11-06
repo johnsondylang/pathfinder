@@ -9,7 +9,8 @@ import {depthFirst} from './pathAlgorithms/depthFirst.js';
 import {dijkstras} from './pathAlgorithms/dijkstras.js';
 import {greedyBestFirst} from './pathAlgorithms/greedyBestFirst.js';
 // imports the maze generating algorithm functions
-import {recursiveDivision} from './mazeAlgorithms/recursiveDivision.js'
+import {recursiveDivision} from './mazeAlgorithms/recursiveDivision.js';
+import {recursiveBacktracking} from './mazeAlgorithms/recursiveBacktracking.js';
 
 export class PathfinderGrid extends LitElement {
 
@@ -29,7 +30,7 @@ export class PathfinderGrid extends LitElement {
          * All the available pathfinding algorithms currently implemented
         */
         this.SUPPORTED_PATH_ALGORITHMS = {
-            "A*": aStar,
+            "A Star": aStar,
             "Breadth First": breadthFirst,
             "Depth First": depthFirst,
             "Dijkstras": dijkstras,    
@@ -37,6 +38,7 @@ export class PathfinderGrid extends LitElement {
         }
 
         this.SUPPORTED_MAZE_ALGORITHMS = {
+            "Recursive Backtracking": recursiveBacktracking,
             "Recursive Division": recursiveDivision,
         }
 
@@ -179,6 +181,8 @@ export class PathfinderGrid extends LitElement {
         if (this.SUPPORTED_MAZE_ALGORITHMS.hasOwnProperty(algorithmName)) {
             // ensure the runningAlgorithm flag is set in the eventHandler
             this.eventHandler.runningAlgorithm = true;
+            // dispatch custom event 
+            this._dispatchAlgorithmStart();
             // clear board to see the maze generating
             this.clearPath();
             this.clearBlocks();
@@ -190,6 +194,7 @@ export class PathfinderGrid extends LitElement {
             // remove the eventHandler flags when maze has been generated
             this.eventHandler.runningAlgorithm = false;
 
+            this._dispatchAlgorithmEnd();
         } else {
             // the way this was intended to be coded, should not ever hit this. Add here just in case
             throw new Error(`You have tried to run an un-supported algrithm: ${algorithmName}`);
@@ -389,6 +394,17 @@ export class PathfinderGrid extends LitElement {
         }
 
         await this.wait(10);
+    }
+
+    /**
+     * fills the entire grid, except for start / end , with blocks
+     */
+    async fillBlocks() {
+        const gridCells = this.shadowRoot.querySelectorAll("grid-cell");
+        Array.from(gridCells).forEach(cell => {            
+            if (cell.isSameNode(this.startCell) || cell.isSameNode(this.endCell)) return;
+            cell.blocked = true;
+        });
     }
 
     /**
