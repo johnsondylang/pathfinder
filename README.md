@@ -1,4 +1,4 @@
-# \pathfinder\
+# Pathfinder
 
 Visualization tool for various pathfinding algorithms
 
